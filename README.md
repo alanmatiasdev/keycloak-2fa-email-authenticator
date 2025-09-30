@@ -3,7 +3,7 @@
 Keycloak Authentication Provider implementation to get a two factor authentication with an OTP (One-time-password) send via Email (through SMTP).
 
 When logging in with this provider, you can send a verification code (OTP) to the user's e-mail address.
-Tested with Keycloak version 22.0.1. If you are using a different Keycloak version, don't forget to change the version in pom.xml file.
+Tested with Keycloak version 26.x. If you are using a different Keycloak version, don't forget to change the version in pom.xml file.
 
 The [Server Development part of the Keycloak reference documentation](https://www.keycloak.org/docs/latest/server_development/index.html) contains additional resources and examples for developing custom Keycloak extensions.
 
@@ -12,12 +12,55 @@ The [Server Development part of the Keycloak reference documentation](https://ww
 If you are using Eclipse, you need to install the Lombok plugin, otherwise Eclipse cannot resolve `log` which is declared at runtim through @JBossLog annotation.
 Find further information at https://projectlombok.org/setup/eclipse
 
-
 # 🚀 Deployment
 
-## Artifact
+## 🖥 Local Build
 
-You can download the necessary artifacts for Keycloak 2FA Email Authenticator from the [release on GitHub.](https://github.com/mesutpiskin/keycloak-2fa-email-authenticator/releases/tag/v0.4) Please choose the appropriate version based on your Keycloak installation.
+> This project requires **Java 21** and Maven.
+
+1. **Install Java 21**  
+   Check your Java version:
+   ```bash
+   java -version
+   ```
+   Ensure it shows Java 21. If not, download and install it from [Adoptium](https://adoptium.net/) or another trusted source.
+
+2. **Install Maven**  
+   Verify Maven installation:
+   ```bash
+   mvn -version
+   ```
+   If Maven is not installed, download it from [Apache Maven](https://maven.apache.org/download.cgi) and follow the installation instructions.
+
+3. **Clone the Repository**  
+   Clone this project to your local machine:
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
+
+4. **Build the Project**  
+   Run the following command to build the project and generate the JAR file:
+   ```bash
+   mvn clean package
+   ```
+   This will create the JAR file `target/keycloak-2fa-email-authenticator-<version>.jar`.
+
+5. **Deploy the JAR**  
+   - For a standard Keycloak installation, copy the generated JAR file to the Keycloak providers directory:
+     ```bash
+     cp target/keycloak-2fa-email-authenticator-<version>.jar <keycloak-home>/providers/
+     ```
+   - For a Dockerized Keycloak setup, copy the JAR to the deployments directory:
+     ```bash
+     cp target/keycloak-2fa-email-authenticator-<version>.jar /opt/jboss/keycloak/standalone/deployments/
+     ```
+
+6. **Build Keycloak**  
+   Ensure Keycloak recognizes the new provider by running:
+   ```bash
+   bin/kc.sh build
+   ```
 
 ## Providers
 
@@ -25,14 +68,6 @@ You can download the necessary artifacts for Keycloak 2FA Email Authenticator fr
 copy `keycloak-2fa-email-authenticator.jar` to `keycloak/providers/` directory.
 
 If you are Dockerized keycloak then copy to `/opt/jboss/keycloak/standalone/deployments/` directory.
-
-## Theme Resources
-
-- **html/code-email.ftl** is a html email template. Copy to `themes/base/email/html/`
-
-- copy **text/code-email.ftl**  to `themes/base/email/text/`
-
-- append **messages/*.properties** to `themes/base/email/messages/messages_en.properties`
 
 ## Build
 
