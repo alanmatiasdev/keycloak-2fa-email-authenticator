@@ -27,7 +27,7 @@ import java.util.Map;
 
 public class EmailAuthenticatorForm extends AbstractUsernameFormAuthenticator {
 
-      protected static final Logger logger = Logger.getLogger(EmailAuthenticatorForm.class);
+    protected static final Logger logger = Logger.getLogger(EmailAuthenticatorForm.class);
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
@@ -50,6 +50,8 @@ public class EmailAuthenticatorForm extends AbstractUsernameFormAuthenticator {
         context.challenge(response);
         return response;
     }
+
+
 
     private void generateAndSendEmailCode(AuthenticationFlowContext context) {
         AuthenticatorConfigModel config = context.getAuthenticatorConfig();
