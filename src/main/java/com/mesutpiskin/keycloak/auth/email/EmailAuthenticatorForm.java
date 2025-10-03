@@ -117,7 +117,7 @@ public class EmailAuthenticatorForm extends AbstractUsernameFormAuthenticator {
             // invalid
             AuthenticationExecutionModel execution = context.getExecution();
             if (execution.isRequired()) {
-                context.getEvent().user(userModel).error(Errors.INVALID_USER_CREDENTIALS);
+                context.getEvent().user(userModel).error(Errors.INVALID_CODE);
                 Response challengeResponse = challenge(context, Messages.INVALID_ACCESS_CODE, EmailConstants.CODE);
                 context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS, challengeResponse);
             } else if (execution.isConditional() || execution.isAlternative()) {
